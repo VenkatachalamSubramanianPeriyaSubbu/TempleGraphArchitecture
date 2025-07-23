@@ -3,10 +3,14 @@ from neo4j import GraphDatabase
 import re
 from typing import Dict, List, Any
 import os
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 uri = os.getenv("NEO4J_URI")
 user = os.getenv("NEO4J_USER")
 password = os.getenv("NEO4J_PASSWORD")
+print(user, password, uri)
 
 class TempleGraphDB:
     def __init__(self, uri=uri, user=user, password=password):
@@ -150,9 +154,7 @@ class TempleGraphDB:
                 state: $state,
                 info: $info,
                 story: $story,
-                visiting_guide: $visiting_guide,
-                architecture: $architecture,
-                scripture_mentions: $scripture_mentions
+                visiting_guide: $visiting_guide
             })
             RETURN t
             """
@@ -162,9 +164,7 @@ class TempleGraphDB:
                        state=temple_data.get('state', ''),
                        info=temple_data.get('info', ''),
                        story=temple_data.get('story', ''),
-                       visiting_guide=temple_data.get('visiting_guide', ''),
-                       architecture=temple_data.get('architecture', ''),
-                       scripture_mentions=temple_data.get('mention_in_scripture', ''))
+                       visiting_guide=temple_data.get('visiting_guide', ''))
             
             print(f"Created temple node: {temple_data.get('name', 'Unknown')}")
     
